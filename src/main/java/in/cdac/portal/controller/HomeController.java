@@ -385,22 +385,6 @@ public class HomeController {
 //		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
 //	}
 	
-	@GetMapping(value = "/zip-download", produces="application/zip")
-	public void zipDownload(HttpServletResponse response) throws IOException {
-		ZipOutputStream zipOut = new ZipOutputStream(response.getOutputStream());
-			String fileBasePath = env.getProperty("pathforiso");
-			String fileName = env.getProperty("filename");
-			FileSystemResource resource = new FileSystemResource(fileBasePath + fileName);
-			ZipEntry zipEntry = new ZipEntry(resource.getFilename());
-			zipEntry.setSize(resource.contentLength());
-			zipOut.putNextEntry(zipEntry);
-			StreamUtils.copy(resource.getInputStream(), zipOut);
-			zipOut.closeEntry();
-		
-		zipOut.finish();
-		zipOut.close();
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
-	}
+	
 
 }
